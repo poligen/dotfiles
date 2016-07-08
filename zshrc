@@ -111,3 +111,9 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+# android studio
+export PATH="/usr/local/android-studio/bin:$PATH"
+export ANDROID_HOME=/home/scipio/Android/Sdk
+export PATH=$PATH:/home/scipio/Android/Sdk/tools
+alias android='/home/scipio/Android/Sdk/tools/android'
