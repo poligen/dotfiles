@@ -117,3 +117,6 @@ export PATH="/usr/local/android-studio/bin:$PATH"
 export ANDROID_HOME=/home/scipio/Android/Sdk
 export PATH=$PATH:/home/scipio/Android/Sdk/tools
 alias android='/home/scipio/Android/Sdk/tools/android'
+
+# anaconda
+export PATH="/home/scipio/anaconda3/bin:$PATH"
