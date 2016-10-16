@@ -85,19 +85,17 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Used by agnoster theme
-DEFAULT_USER="scipio"
+DEFAULT_USER="marcus"
 # Auto load dircolors
 eval `dircolors ~/.dircolors`
 export TERM=xterm-256color
 
-### bundle open whatever_gem
-export EDITOR=/usr/bin/gvim
-export BUNDLER_EDITOR=/usr/bin/gvim
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-export NVM_DIR="/home/scipio/.nvm"
+export NVM_DIR="/home/marcus/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 
 # place this after nvm initialization!
 autoload -U add-zsh-hook
@@ -113,10 +111,10 @@ add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
 # android studio
-export PATH="/usr/local/android-studio/bin:$PATH"
-export ANDROID_HOME=/home/scipio/Android/Sdk
-export PATH=$PATH:/home/scipio/Android/Sdk/tools
-alias android='/home/scipio/Android/Sdk/tools/android'
+#export PATH="/usr/local/android-studio/bin:$PATH"
+#export ANDROID_HOME=/home/scipio/Android/Sdk
+#export PATH=$PATH:/home/scipio/Android/Sdk/tools
+#alias android='/home/scipio/Android/Sdk/tools/android'
 
 # anaconda
-export PATH="/home/scipio/anaconda3/bin:$PATH"
+export PATH="/home/marcus/anaconda3/bin:$PATH"
