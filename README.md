@@ -1,8 +1,6 @@
 ```bash
 ln -s dotfiles/dircolors .dircolors 
-ln -s dotfiles/oh-my-zsh .oh-my-zsh
-ln -s dotfiles/vim .vim
-ln -s dotfiles/janus .janus
+ln -s dotfiles/spacemacs .spacemacs
 
 ln -s dotfiles/vimrc.before .vimrc.before
 ln -s dotfiles/vimrc.after .vimrc.after

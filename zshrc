@@ -85,7 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Used by agnoster theme
-DEFAULT_USER="marcus"
+DEFAULT_USER="scipio"
 # Auto load dircolors
 eval `dircolors ~/.dircolors`
 export TERM=xterm-256color
@@ -93,7 +93,7 @@ export TERM=xterm-256color
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-export NVM_DIR="/home/marcus/.nvm"
+export NVM_DIR="/home/scipio/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 
@@ -117,4 +117,4 @@ load-nvmrc
 #alias android='/home/scipio/Android/Sdk/tools/android'
 
 # anaconda
-export PATH="/home/marcus/anaconda3/bin:$PATH"
+export PATH="/home/scipio/anaconda3/bin:$PATH"
