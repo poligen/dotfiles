@@ -31,6 +31,9 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     sql
+     html
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -40,9 +43,9 @@ values."
      auto-completion
      ;; better-defaults
      emacs-lisp
-     ;; git
-      markdown
-      org
+     git
+     markdown
+     org
       (ruby :variables
             ruby-version-manager 'rvm
             ruby-enable-enh-ruby-mode t)
@@ -58,8 +61,8 @@ values."
              shell-default-term-shell "/bin/zsh"
              shell-default-position 'bottom)
       
-     ;; spell-checking
-     ;; syntax-checking
+      spell-checking
+      syntax-checking
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
@@ -140,21 +143,22 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(zenburn
+                         spacemacs-dark
                          spacemacs-light
                          leuven
                          monokai
-                         zenburn )
+                          )
 
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Sauce Code Powerline"
-                               :size 24
+   dotspacemacs-default-font '("Source Han Code JP"
+                               :size 25
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.2)
 
 
 
@@ -318,7 +322,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (spacemacs//set-monospaced-font   "Sauce Code Powerline" "rx_kt0 Regular" 20 25)
+  (spacemacs//set-monospaced-font   "Sauce Code Powerline" "Source Han Code JP" 20 25)
   (spacemacs/toggle-indent-guide-globally-on)
   )
 
@@ -326,3 +330,17 @@ you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (packed auto-complete alert sql-indent flycheck-pos-tip flycheck smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct evil-magit magit magit-popup git-commit with-editor auto-dictionary iedit haml-mode markdown-mode bind-key bind-map company projectile xterm-color which-key web-mode shell-pop rspec-mode org-projectile monokai-theme info+ hungry-delete htmlize helm-ag evil-matchit ein aggressive-indent ace-link smartparens highlight yasnippet helm helm-core hydra inf-ruby spacemacs-theme zenburn-theme zeal-at-point yaml-mode ws-butler window-numbering websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop robe restart-emacs request rbenv rake rainbow-delimiters quelpa pug-mode popwin persp-mode pcache paradox pangu-spacing pandoc-mode ox-pandoc org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum linum-relative link-hint less-css-mode indent-guide ido-vertical-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet google-translate golden-ratio gnuplot gh-md flx-ido find-by-pinyin-dired fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump define-word company-web company-statistics column-enforce-mode clean-aindent-mode cl-generic chruby chinese-pyim bundler auto-yasnippet auto-highlight-symbol auto-compile adaptive-wrap ace-window ace-pinyin ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
