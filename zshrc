@@ -121,3 +121,6 @@ export PATH="/home/scipio/anaconda3/bin:$PATH"
 
 #utf-8
 export LC_CTYPE=zh_TW.UTF-8
+
+# bundle editor
+export BUNDLER_EDITOR="/home/scipio/local/bin/emacs"
