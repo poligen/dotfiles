@@ -52,6 +52,7 @@ values."
       (ruby :variables
             ruby-version-manager 'rvm
             ruby-enable-enh-ruby-mode t)
+      ruby-on-rails
       dash
       pandoc
       chinese
@@ -73,6 +74,9 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      color-theme-sanityinc-tomorrow
+                                      color-theme-sanityinc-solarized
+                                      color-theme-solarized
                                       monokai-theme
                                       zenburn-theme
                                       tern-auto-complete)
@@ -147,10 +151,12 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(zenburn
-                         spacemacs-dark
-                         spacemacs-light
+   dotspacemacs-themes '(
+                         sanityinc-tomorrow-eighties
                          leuven
+                         zenburn
+                         sanityinc-solarized-dark
+                         spacemacs-dark
                          monokai
                           )
 
@@ -310,7 +316,15 @@ values."
    dotspacemacs-whitespace-cleanup nil
    js2-basic-offset 2
    js-indent-level 2
+
+   ;;tab-width
+   tab-width 2
+
+   ;; html, css indent 2
+   web-mode-markup-indent-offset 2
    ))
+
+
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -343,10 +357,10 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (tern-auto-complete evil avy async dash web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode packed auto-complete alert sql-indent flycheck-pos-tip flycheck smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct evil-magit magit magit-popup git-commit with-editor auto-dictionary iedit haml-mode markdown-mode bind-key bind-map company projectile xterm-color which-key web-mode shell-pop rspec-mode org-projectile monokai-theme info+ hungry-delete htmlize helm-ag evil-matchit ein aggressive-indent ace-link smartparens highlight yasnippet helm helm-core hydra inf-ruby spacemacs-theme zenburn-theme zeal-at-point yaml-mode ws-butler window-numbering websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop robe restart-emacs request rbenv rake rainbow-delimiters quelpa pug-mode popwin persp-mode pcache paradox pangu-spacing pandoc-mode ox-pandoc org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum linum-relative link-hint less-css-mode indent-guide ido-vertical-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet google-translate golden-ratio gnuplot gh-md flx-ido find-by-pinyin-dired fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump define-word company-web company-statistics column-enforce-mode clean-aindent-mode cl-generic chruby chinese-pyim bundler auto-yasnippet auto-highlight-symbol auto-compile adaptive-wrap ace-window ace-pinyin ace-jump-helm-line ac-ispell))))
+    (color-theme-solarized color-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized projectile-rails inflections feature-mode deferred s winum fuzzy diminish pinyinlib f log4e tern-auto-complete evil avy async dash web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode packed auto-complete alert sql-indent flycheck-pos-tip flycheck smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct evil-magit magit magit-popup git-commit with-editor auto-dictionary iedit haml-mode markdown-mode bind-key bind-map company projectile xterm-color which-key web-mode shell-pop rspec-mode org-projectile monokai-theme info+ hungry-delete htmlize helm-ag evil-matchit ein aggressive-indent ace-link smartparens highlight yasnippet helm helm-core hydra inf-ruby spacemacs-theme zenburn-theme zeal-at-point yaml-mode ws-butler window-numbering websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop robe restart-emacs request rbenv rake rainbow-delimiters quelpa pug-mode popwin persp-mode pcache paradox pangu-spacing pandoc-mode ox-pandoc org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum linum-relative link-hint less-css-mode indent-guide ido-vertical-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet google-translate golden-ratio gnuplot gh-md flx-ido find-by-pinyin-dired fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump define-word company-web company-statistics column-enforce-mode clean-aindent-mode cl-generic chruby chinese-pyim bundler auto-yasnippet auto-highlight-symbol auto-compile adaptive-wrap ace-window ace-pinyin ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:foreground "#DCDCCC" :background "#3F3F3F")))))
