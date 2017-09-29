@@ -124,3 +124,7 @@ export LC_CTYPE=zh_TW.UTF-8
 
 # bundle editor
 export BUNDLER_EDITOR="/home/scipio/local/bin/emacs"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/scipio/.sdkman"
+[[ -s "/home/scipio/.sdkman/bin/sdkman-init.sh" ]] && source "/home/scipio/.sdkman/bin/sdkman-init.sh"
