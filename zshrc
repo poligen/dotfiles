@@ -1,4 +1,3 @@
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -128,3 +127,9 @@ export BUNDLER_EDITOR="/home/scipio/local/bin/emacs"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/scipio/.sdkman"
 [[ -s "/home/scipio/.sdkman/bin/sdkman-init.sh" ]] && source "/home/scipio/.sdkman/bin/sdkman-init.sh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/scipio/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/home/scipio/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/scipio/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/scipio/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

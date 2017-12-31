@@ -31,15 +31,16 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     (haskell :variables
+              haskell-enable-hindent-style "chris-done"
+              haskell-completion-backend 'intero)
+
      elm
-     haskell
+     auto-completion
      python
      sql
-     elixir
      html
-     (javascript :variables
-                 javascript-disable-tern-port-files nil
-                 tern-command '("node" "/home/scipio/.nvm/versions/node/v6.9.1/bin/tern"))
+     javascript
      yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -47,19 +48,17 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
      ;; better-defaults
      emacs-lisp
      git
      markdown
-     org
-      (ruby :variables
-            ruby-version-manager 'rvm
-            ruby-enable-enh-ruby-mode t)
-      ruby-on-rails
+     (org :variables
+          org-enable-github-support t)
+     (ruby :variables
+           ruby-version-manager 'rvm
+           ruby-enable-enh-ruby-mode t)
       dash
       pandoc
-      chinese
       ipython-notebook
       shell
       (shell :variables
@@ -68,7 +67,10 @@ values."
              shell-enable-smart-eshell t
              shell-default-term-shell "/bin/zsh"
              shell-default-position 'bottom)
-      spell-checking
+      (spell-checking :variables
+                      ispell-program-name "aspell"
+                      ispell-dictionary "american"
+                      spell-checking-enable-by-default nil)
       syntax-checking
      ;; version-control
      )
@@ -345,7 +347,6 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (spacemacs//set-monospaced-font   "Sauce Code Powerline" "Source Han Code JP" 20 25)
   (spacemacs/toggle-indent-guide-globally-on)
   )
 
@@ -360,7 +361,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode flycheck-elm elm-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode powerline org-category-capture request-deferred pyim pyim-basedict undo-tree color-theme-solarized color-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized projectile-rails inflections feature-mode deferred s winum fuzzy diminish pinyinlib f log4e tern-auto-complete evil avy async dash web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode packed auto-complete alert sql-indent flycheck-pos-tip flycheck smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct evil-magit magit magit-popup git-commit with-editor auto-dictionary iedit haml-mode markdown-mode bind-key bind-map company projectile xterm-color which-key web-mode shell-pop rspec-mode org-projectile monokai-theme info+ hungry-delete htmlize helm-ag evil-matchit ein aggressive-indent ace-link smartparens highlight yasnippet helm helm-core hydra inf-ruby spacemacs-theme zenburn-theme zeal-at-point yaml-mode ws-butler window-numbering websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop robe restart-emacs request rbenv rake rainbow-delimiters quelpa pug-mode popwin persp-mode pcache paradox pangu-spacing pandoc-mode ox-pandoc org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum linum-relative link-hint less-css-mode indent-guide ido-vertical-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet google-translate golden-ratio gnuplot gh-md flx-ido find-by-pinyin-dired fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump define-word company-web company-statistics column-enforce-mode clean-aindent-mode cl-generic chruby chinese-pyim bundler auto-yasnippet auto-highlight-symbol auto-compile adaptive-wrap ace-window ace-pinyin ace-jump-helm-line ac-ispell))))
+    (ghub ox-gfm pcre2el spinner ht gntp parent-mode pos-tip flx anzu goto-chg web-completion-data pkg-info epl popup intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode flycheck-elm elm-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode powerline org-category-capture request-deferred pyim pyim-basedict undo-tree color-theme-solarized color-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized projectile-rails inflections feature-mode deferred s winum fuzzy diminish pinyinlib f log4e tern-auto-complete evil avy async dash web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode packed auto-complete alert sql-indent flycheck-pos-tip flycheck smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct evil-magit magit magit-popup git-commit with-editor auto-dictionary iedit haml-mode markdown-mode bind-key bind-map company projectile xterm-color which-key web-mode shell-pop rspec-mode org-projectile monokai-theme info+ hungry-delete htmlize helm-ag evil-matchit ein aggressive-indent ace-link smartparens highlight yasnippet helm helm-core hydra inf-ruby spacemacs-theme zenburn-theme zeal-at-point yaml-mode ws-butler window-numbering websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop robe restart-emacs request rbenv rake rainbow-delimiters quelpa pug-mode popwin persp-mode pcache paradox pangu-spacing pandoc-mode ox-pandoc org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum linum-relative link-hint less-css-mode indent-guide ido-vertical-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet google-translate golden-ratio gnuplot gh-md flx-ido find-by-pinyin-dired fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump define-word company-web company-statistics column-enforce-mode clean-aindent-mode cl-generic chruby chinese-pyim bundler auto-yasnippet auto-highlight-symbol auto-compile adaptive-wrap ace-window ace-pinyin ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
