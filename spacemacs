@@ -34,9 +34,9 @@ values."
      (haskell :variables
               haskell-enable-hindent-style "chris-done"
               haskell-completion-backend 'intero)
-     purescript
      elm
      elixir
+     react
      auto-completion
      python
      sql
@@ -326,14 +326,6 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
-   js2-basic-offset 2
-   js-indent-level 2
-
-   ;;tab-width
-   tab-width 2
-
-   ;; html, css indent 2
-   web-mode-markup-indent-offset 2
    ))
 
 
@@ -355,6 +347,19 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (spacemacs/toggle-indent-guide-globally-on)
+
+  ;;reactjs-config
+  (setq-default
+   ;; js2-mode
+   js2-basic-offset 2
+   ;; web-mode
+   css-indent-offset 2
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-attr-indent-offset 2
+
+   )
 
 ;;----------------------------------------------------------------------------
 ;; Reason setup
