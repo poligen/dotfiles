@@ -53,7 +53,7 @@ plugins=(git rails rails ruby capistrano bundler heroku rake rvm autojump comman
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -116,7 +116,7 @@ load-nvmrc
 #alias android='/home/scipio/Android/Sdk/tools/android'
 
 # anaconda
-export PATH="/home/scipio/anaconda3/bin:$PATH"
+# export PATH="/home/scipio/anaconda3/bin:$PATH"
 
 #utf-8
 export LC_CTYPE=zh_TW.UTF-8
@@ -133,3 +133,6 @@ if [ -f '/home/scipio/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/scipio/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/scipio/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+[[ -s "/home/scipio/.gvm/scripts/gvm" ]] && source "/home/scipio/.gvm/scripts/gvm"
+
