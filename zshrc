@@ -136,3 +136,5 @@ if [ -f '/home/scipio/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then sou
 
 [[ -s "/home/scipio/.gvm/scripts/gvm" ]] && source "/home/scipio/.gvm/scripts/gvm"
 
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
