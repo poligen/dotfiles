@@ -96,56 +96,10 @@ source $ZSH/oh-my-zsh.sh
 
 # Used by agnoster theme
 DEFAULT_USER="scipio"
-# Auto load dircolors
-eval `dircolors ~/.dircolors`
-export TERM=xterm-256color
 
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-export NVM_DIR="/home/scipio/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-load-nvmrc() {
-  if [[ -f .nvmrc && -r .nvmrc ]]; then
-    nvm use
-  elif [[ $(nvm version) != $(nvm version default)  ]]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-
-# android studio
-#export PATH="/usr/local/android-studio/bin:$PATH"
-#export ANDROID_HOME=/home/scipio/Android/Sdk
-#export PATH=$PATH:/home/scipio/Android/Sdk/tools
-#alias android='/home/scipio/Android/Sdk/tools/android'
-
-# anaconda
-# export PATH="/home/scipio/anaconda3/bin:$PATH"
 
 #utf-8
 export LC_CTYPE=zh_TW.UTF-8
 
 # bundle editor
-export BUNDLER_EDITOR="/home/scipio/local/bin/emacs"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/scipio/.sdkman"
-[[ -s "/home/scipio/.sdkman/bin/sdkman-init.sh" ]] && source "/home/scipio/.sdkman/bin/sdkman-init.sh"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/scipio/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/home/scipio/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/scipio/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/scipio/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
-[[ -s "/home/scipio/.gvm/scripts/gvm" ]] && source "/home/scipio/.gvm/scripts/gvm"
-
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# export BUNDLER_EDITOR="/Users/scipio/local/bin/emacs"
