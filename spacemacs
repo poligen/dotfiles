@@ -416,8 +416,8 @@ you should place your code here."
       "** %U -- %^{Heading} 
  %?" :empty-lines 1)
      ("pn" "quick notes" entry
-      (file+headline "~/Nextcloud/Org/inbox.org" "Notes")
-      (file "~/dotfiles/templates/tl-todo.txt"))
+      (file+headline "~/Nextcloud/Org/note.org" "Notes")
+      (file "~/dotfiles/templates/tl-note.txt"))
      ("ps" "Someday entry" entry
       (file+headline "~/Nextcloud/Org/someday.org" "Someday")
       "** %^{description} - %u %^g 

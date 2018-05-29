@@ -1,4 +1,4 @@
-** %^{Description}
-:LOGBOOK:
-- Added: %U
-:END:
+** %^{Name} captured %U
+%^{Tidbit type|quote|zinger|one-liner|textlet}
+Possible Inspiration: %a  %i
+%?
