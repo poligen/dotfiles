@@ -103,3 +103,7 @@ export LC_CTYPE=zh_TW.UTF-8
 
 # bundle editor
 # export BUNDLER_EDITOR="/Users/scipio/local/bin/emacs"
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash

@@ -1,0 +1,9 @@
+** NEXT %^{title}
+:PROPERTIES
+author: %^{author}
+:END
+
+:LOGBOOK:
+- Added: %U
+%?
+:END:
