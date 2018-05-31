@@ -1,4 +1,4 @@
-** NEXT %^{title}
+** SOMEDAY %^{title}
 :PROPERTIES
 author: %^{author}
 :END

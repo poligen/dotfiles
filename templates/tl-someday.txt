@@ -1,0 +1,7 @@
+** SOMEDAY %^{Description}
+%^g
+
+%?
+:LOGBOOK:
+- Added: %U
+:END:

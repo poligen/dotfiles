@@ -37,6 +37,7 @@ values."
      elm
      osx
      python
+     pdf-tools
      emoji
      elixir
      react
@@ -89,6 +90,8 @@ values."
                                       tern-auto-complete
                                       ;;prettier
                                       prettier-js
+                                      org-cliplink
+                                      interleave
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -292,7 +295,14 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers '(t
+                               :disabled-for-modes dired-mode
+                               doc-view-mode
+                               markdown-mode
+                               org-mode
+                               pdf-view-mode
+                               )
+
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -340,9 +350,19 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq exec-path-from-shell-check-startup-files nil)
   (add-to-list 'package-archives
-               '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+               '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t
+               )
+
+
+
+
+
 
   )
+
+
+
+
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -353,8 +373,14 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (spacemacs/toggle-indent-guide-globally-on)
 
+
+
   ;; start org-protocol
   (require 'org-protocol)
+
+  ;; org-cliplink
+  (global-set-key (kbd "C-x p i") 'org-cliplink)
+
 
   ;;reactjs-config
   (setq-default
@@ -385,84 +411,86 @@ you should place your code here."
                                  "~/Nextcloud/Org/mylife.org"
                                  "~/Nextcloud/Org/someday.org"))
 
+    ;; org-refile
+    (setq org-refile-targets
+      (quote
+       (("someday.org" :maxlevel . 3)
+        ("inbox.org" :maxlevel . 3)
+        ("mylife.org" :maxlevel . 3))))
+
     ;; org-capture
     ;; (setq org-default-notes-file custom-org-mode-capture-file)
+    (setq org-capture-templates
+          (quote
+           (("p" "Private Templates")
+            ("pt" "add todo" entry
+             (file+headline "~/Nextcloud/Org/inbox.org" "Tasks")
+             (file "~/dotfiles/templates/tl-todo.txt")
+             :empty-lines 1)
+            ("pj" "my personal journal" entry
+             (file+olp+datetree "~/Nextcloud/Org/journal.org")
+             "** %U -- %^{Heading} 
+ %?" :empty-lines 1)
+            ("pn" "quick notes" entry
+             (file+headline "~/Nextcloud/Org/inbox.org" "Notes")
+             (file "~/dotfiles/templates/tl-todo.txt"))
+            ("ps" "Someday entry" entry
+             (file+headline "~/Nextcloud/Org/someday.org" "Someday")
+             "** %^{description} - %u %^g 
+ %?")
+            ("pb" "Book I want to read" entry
+             (file+headline "~/Nextcloud/Org/mylife.org" "Books to read")
+             (file "~/dotfiles/templates/tl-book.txt"))
+            ("pr" "my running record" table-line
+             (file+headline "~/Nextcloud/Org/mylife.org" "Jogging")
+             "| %u | %^{km} | %^{duration(HH:MM:SS)} |" :kill-buffer t)
+            ("pv" "movie or tv show" entry
+             (file+headline "~/Nextcloud/Org/mylife.org" "Films")
+             "** %^{Name} - %u")
+            ("w" "Working Templates")
+            ("wd" "setting this months duty" entry
+             (file+olp "~/Nextcloud/Org/mylife.org" "Work" "Duty")
+             "** TODO %^t - Dutyday")
+            ("wh" "setting homevisit this months" entry
+             (file+olp "~/Nextcloud/Org/mylife.org" "Work" "Home Visit")
+             "** TODO %^T - Home visit")
 
+            ("c" "Protocol extension" entry
+             (file+headline "~/Nextcloud/Org/note.org" "Readlater")
+             "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?"
+             )
+            ("L" "Protocol Link" entry
+             (file+headline "~/Nextcloud/Org/note.org" "Readlater")
+             "* %? [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]]\n"
+             :empty-lines 1)
+            )))
 
     )
 
   )
 
 
-;; Do not write anything past this comment. This is where Emacs will
+;; Do not write anything past this comment!!!!!!! This is where Emacs will
 ;; auto-generate custom variable definitions.
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   (quote
-    ("~/Nextcloud/Org/someday.org" "~/Nextcloud/Org/mylife.org" "~/Nextcloud/Org/inbox.org")))
- '(org-capture-templates
-   (quote
-    (("p" "Private Templates")
-     ("pt" "add todo" entry
-      (file+headline "~/Nextcloud/Org/inbox.org" "Tasks")
-      (file "~/dotfiles/templates/tl-todo.txt")
-      :empty-lines 1)
-     ("pj" "my personal journal" entry
-      (file+olp+datetree "~/Nextcloud/Org/journal.org")
-      "** %U -- %^{Heading} 
- %?" :empty-lines 1)
-     ("pn" "quick notes" entry
-      (file+headline "~/Nextcloud/Org/note.org" "Notes")
-      (file "~/dotfiles/templates/tl-note.txt"))
-     ("ps" "Someday entry" entry
-      (file+headline "~/Nextcloud/Org/someday.org" "Someday")
-      "** %^{description} - %u %^g 
- %?")
-     ("pb" "Book I want to read" entry
-      (file+headline "~/Nextcloud/Org/mylife.org" "Books to read")
-      (file "~/dotfiles/templates/tl-book.txt"))
-     ("pr" "my running record" table-line
-      (file+headline "~/Nextcloud/Org/mylife.org" "Jogging")
-      "| %u | %^{km} | %^{duration(HH:MM:SS)} |" :kill-buffer t)
-     ("pv" "movie or tv show" entry
-      (file+headline "~/Nextcloud/Org/mylife.org" "Films")
-      "** %^{Name} - %u")
-     ("w" "Working Templates")
-     ("wd" "setting this months duty" entry
-      (file+olp "~/Nextcloud/Org/mylife.org" "Work" "Duty")
-      "** TODO %^t - Dutyday")
-     ("wh" "setting homevisit this months" entry
-      (file+olp "~/Nextcloud/Org/mylife.org" "Work" "Home Visit")
-      "** TODO %^T - Home visit")
-
-     ("c" "Protocol extension" entry
-      (file+headline "~/Nextcloud/Org/note.org" "Readlater")
-      "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?"
-      )
-     ("L" "Protocol Link" entry
-      (file+headline "~/Nextcloud/Org/note.org" "Readlater")
-      "* %? [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]]\n"
-       :empty-lines 1)
-     )))
  '(org-log-into-drawer t)
  '(org-log-reschedule (quote note))
  '(org-refile-allow-creating-parent-nodes (quote confirm))
- '(org-refile-targets
-   (quote
-    (("someday.org" :maxlevel . 3)
-     ("inbox.org" :maxlevel . 3)
-     ("mylife.org" :maxlevel . 3))))
  '(org-refile-use-outline-path (quote file))
+ '(org-modules
+   (quote
+    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-protocol org-rmail org-w3m)))
  '(package-selected-packages
    (quote
-    (reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl org-mime dash-at-point emoji-cheat-sheet-plus company-emoji go-guru go-eldoc company-go go-mode prettier-js reason-mode psci purescript-mode psc-ide ghub ox-gfm pcre2el spinner ht gntp parent-mode pos-tip flx anzu goto-chg web-completion-data pkg-info epl popup intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode flycheck-elm elm-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode powerline org-category-capture request-deferred pyim pyim-basedict undo-tree color-theme-solarized color-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized projectile-rails inflections feature-mode deferred s winum fuzzy diminish pinyinlib f log4e tern-auto-complete evil avy async dash web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode packed auto-complete alert sql-indent flycheck-pos-tip flycheck smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct evil-magit magit magit-popup git-commit with-editor auto-dictionary iedit haml-mode markdown-mode bind-key bind-map company projectile xterm-color which-key web-mode shell-pop rspec-mode org-projectile monokai-theme info+ hungry-delete htmlize helm-ag evil-matchit ein aggressive-indent ace-link smartparens highlight yasnippet helm helm-core hydra inf-ruby spacemacs-theme zenburn-theme zeal-at-point yaml-mode ws-butler window-numbering websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop robe restart-emacs request rbenv rake rainbow-delimiters quelpa pug-mode popwin persp-mode pcache paradox pangu-spacing pandoc-mode ox-pandoc org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum linum-relative link-hint less-css-mode indent-guide ido-vertical-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet google-translate golden-ratio gnuplot gh-md flx-ido find-by-pinyin-dired fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump define-word company-web company-statistics column-enforce-mode clean-aindent-mode cl-generic chruby chinese-pyim bundler auto-yasnippet auto-highlight-symbol auto-compile adaptive-wrap ace-window ace-pinyin ace-jump-helm-line ac-ispell))))
+    (define-word zenburn-theme yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tern-auto-complete tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode prettier-js popwin pip-requirements persp-mode pdf-tools pbcopy paradox pandoc-mode ox-pandoc ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-gcal org-download org-cliplink org-bullets open-junk-file ob-elixir neotree multi-term move-text monokai-theme mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl json-mode js2-refactor js-doc intero interleave indent-guide hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav ein dumb-jump diminish dash-at-point cython-mode company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-anaconda column-enforce-mode color-theme-solarized color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized coffee-mode cmm-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:foreground "#DCDCCC" :background "#3F3F3F")))))
+ )
