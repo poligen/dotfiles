@@ -1,6 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -85,6 +86,9 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+#emacs eterm 256
+export TERM="xterm-256color"
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -94,14 +98,33 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Used by agnoster theme
-DEFAULT_USER="scipio"
-
-
-#utf-8
+# utf-8
 export LC_CTYPE=zh_TW.UTF-8
 
-
+#asdf version manager setting
 . $HOME/.asdf/asdf.sh
 
 . $HOME/.asdf/completions/asdf.bash
+
+# git aliases
+alias ga='git add'
+alias gp='git push'
+alias gpu='git pull'
+
+alias gs='git status'
+alias gd='git diff'
+alias gds='git diff --staged'
+
+alias gm='git commit -m'
+alias gc='git checkout'
+
+
+#anaconda environment
+export PATH="/Users/scipio/anaconda3/bin:$PATH"
+
+# IEx setting
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+# Rust setting
+export PATH="$HOME/.cargo/bin:$PATH"
+

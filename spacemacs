@@ -31,21 +31,17 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     (haskell :variables
-              haskell-enable-hindent-style "chris-done"
-              haskell-completion-backend 'intero)
-     elm
      osx
      python
      pdf-tools
      emoji
-     elixir
+     erlang
      react
      auto-completion
      python
      sql
      html
-     javascript
+     (javascript :variables javascript-disable-tern-port-files nil)
      yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -75,6 +71,7 @@ values."
                       ispell-program-name "aspell"
                       ispell-dictionary "american"
                       spell-checking-enable-by-default nil)
+      elixir
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
@@ -91,6 +88,7 @@ values."
                                       ;;prettier
                                       prettier-js
                                       org-cliplink
+                                      org-projectile
                                       interleave
                                       )
    ;; A list of packages that cannot be updated.
@@ -353,11 +351,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
                '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t
                )
 
-
-
-
-
-
   )
 
 
@@ -416,6 +409,7 @@ you should place your code here."
       (quote
        (("someday.org" :maxlevel . 3)
         ("inbox.org" :maxlevel . 3)
+        ("note.org" :maxlevel . 3)
         ("mylife.org" :maxlevel . 3))))
 
     ;; org-capture
@@ -469,6 +463,18 @@ you should place your code here."
 
   )
 
+(defun org-brain/init-org-brain ()
+  ;;org-brain setting
+  (use-package org-brain
+    :ensure t
+    :init
+    (with-eval-after-load 'evil
+      (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
+    )
+
+
+  )
+
 
 ;; Do not write anything past this comment!!!!!!! This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -480,14 +486,14 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(org-log-into-drawer t)
  '(org-log-reschedule (quote note))
- '(org-refile-allow-creating-parent-nodes (quote confirm))
- '(org-refile-use-outline-path (quote file))
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-protocol org-rmail org-w3m)))
+ '(org-refile-allow-creating-parent-nodes (quote confirm))
+ '(org-refile-use-outline-path (quote file))
  '(package-selected-packages
    (quote
-    (define-word zenburn-theme yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tern-auto-complete tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode prettier-js popwin pip-requirements persp-mode pdf-tools pbcopy paradox pandoc-mode ox-pandoc ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-gcal org-download org-cliplink org-bullets open-junk-file ob-elixir neotree multi-term move-text monokai-theme mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl json-mode js2-refactor js-doc intero interleave indent-guide hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav ein dumb-jump diminish dash-at-point cython-mode company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-anaconda column-enforce-mode color-theme-solarized color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized coffee-mode cmm-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (erlang treepy graphql org-plus-contrib powerline tablist pcre2el ht org-category-capture alert log4e gntp markdown-mode json-snatcher json-reformat multiple-cursors hydra parent-mode projectile haml-mode gitignore-mode flyspell-correct flycheck flx magit magit-popup git-commit ghub with-editor smartparens iedit anzu evil goto-chg highlight skewer-mode request-deferred websocket request deferred js2-mode simple-httpd web-completion-data dash-functional tern ghc haskell-mode color-theme inf-ruby bind-map bind-key yasnippet packed anaconda-mode pythonic company elixir-mode pkg-info epl helm avy helm-core async auto-complete popup dash tide typescript-mode go-guru go-eldoc company-go go-mode org-brain define-word zenburn-theme yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tern-auto-complete tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode prettier-js popwin pip-requirements persp-mode pdf-tools pbcopy paradox pandoc-mode ox-pandoc ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-gcal org-download org-cliplink org-bullets open-junk-file ob-elixir neotree multi-term move-text monokai-theme mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl json-mode js2-refactor js-doc intero interleave indent-guide hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav ein dumb-jump diminish dash-at-point cython-mode company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-anaconda column-enforce-mode color-theme-solarized color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized coffee-mode cmm-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
