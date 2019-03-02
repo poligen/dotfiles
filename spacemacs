@@ -84,6 +84,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      zotxt
                                       color-theme-sanityinc-tomorrow
                                       color-theme-sanityinc-solarized
                                       color-theme-solarized
@@ -353,7 +354,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-to-list 'package-archives
                '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t
                )
-
   )
 
 
@@ -368,6 +368,25 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (spacemacs/toggle-indent-guide-globally-on)
+
+  ;; org-image-width setting
+  (setq org-image-actual-width nil)
+  ;; org-download-default-width
+  (setq org-download-image-org-width 300)
+
+  (require 'org) 
+  ;; Activate org-zotxt-mode in org-mode buffers
+  (add-hook 'org-mode-hook (lambda () (org-zotxt-mode 1)))
+
+  ;; Bind something to replace the awkward C-u C-c " i
+  (define-key org-mode-map
+    (kbd "C-c \" \"") (lambda () (interactive)
+                        (org-zotxt-insert-reference-link '(4))))
+  ;; Change citation format to be less cumbersome in files.
+  ;; look up at xml id column
+  (eval-after-load "zotxt"
+    '(setq zotxt-default-bibliography-style "apa"))
+
 
 
   ;; font for chinese word
@@ -494,7 +513,7 @@ you should place your code here."
  '(org-refile-use-outline-path (quote file))
  '(package-selected-packages
    (quote
-    (company-auctex auctex unfill mwim flycheck-rust flycheck-pos-tip toml-mode racer pos-tip cargo rust-mode erlang treepy graphql org-plus-contrib powerline tablist pcre2el ht org-category-capture alert log4e gntp markdown-mode json-snatcher json-reformat multiple-cursors hydra parent-mode projectile haml-mode gitignore-mode flyspell-correct flycheck flx magit magit-popup git-commit ghub with-editor smartparens iedit anzu evil goto-chg highlight skewer-mode request-deferred websocket request deferred js2-mode simple-httpd web-completion-data dash-functional tern ghc haskell-mode color-theme inf-ruby bind-map bind-key yasnippet packed anaconda-mode pythonic company elixir-mode pkg-info epl helm avy helm-core async auto-complete popup dash tide typescript-mode go-guru go-eldoc company-go go-mode org-brain define-word zenburn-theme yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tern-auto-complete tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode prettier-js popwin pip-requirements persp-mode pdf-tools pbcopy paradox pandoc-mode ox-pandoc ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-gcal org-download org-cliplink org-bullets open-junk-file ob-elixir neotree multi-term move-text monokai-theme mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl json-mode js2-refactor js-doc intero interleave indent-guide hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav ein dumb-jump diminish dash-at-point cython-mode company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-anaconda column-enforce-mode color-theme-solarized color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized coffee-mode cmm-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (transient lv f zotxt company-auctex auctex unfill mwim flycheck-rust flycheck-pos-tip toml-mode racer pos-tip cargo rust-mode erlang treepy graphql org-plus-contrib powerline tablist pcre2el ht org-category-capture alert log4e gntp markdown-mode json-snatcher json-reformat multiple-cursors hydra parent-mode projectile haml-mode gitignore-mode flyspell-correct flycheck flx magit magit-popup git-commit ghub with-editor smartparens iedit anzu evil goto-chg highlight skewer-mode request-deferred websocket request deferred js2-mode simple-httpd web-completion-data dash-functional tern ghc haskell-mode color-theme inf-ruby bind-map bind-key yasnippet packed anaconda-mode pythonic company elixir-mode pkg-info epl helm avy helm-core async auto-complete popup dash tide typescript-mode go-guru go-eldoc company-go go-mode org-brain define-word zenburn-theme yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tern-auto-complete tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode prettier-js popwin pip-requirements persp-mode pdf-tools pbcopy paradox pandoc-mode ox-pandoc ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-gcal org-download org-cliplink org-bullets open-junk-file ob-elixir neotree multi-term move-text monokai-theme mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl json-mode js2-refactor js-doc intero interleave indent-guide hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav ein dumb-jump diminish dash-at-point cython-mode company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-anaconda column-enforce-mode color-theme-solarized color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized coffee-mode cmm-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(rust-format-on-save t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
