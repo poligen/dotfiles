@@ -62,7 +62,7 @@
 (if window-system
     (dolist (charset '(kana han cjk-misc bopomofo))
       (set-fontset-font (frame-parameter nil 'font)
-                        charset (font-spec :family "Hiragino Sans GB" :size 18))))
+                        charset (font-spec :family "Hiragino Sans" :size 18))))
 
 
 (require 'org)
