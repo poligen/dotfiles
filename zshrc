@@ -62,7 +62,7 @@ DEFAULT_USER="scipio"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git rails rails ruby capistrano bundler heroku rake rvm autojump command-not-found python pip github )
+plugins=(git asdf battery emacs emoji npm sudo command-not-found python pip github )
 
 # User configuration
 
@@ -130,9 +130,3 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export PATH="$HOME/.cargo/bin:$PATH"
 export RUST_SRC_PATH="/Users/scipio/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
-#GO development
-export GOPATH="${HOME}/.go"
-export GOROOT="$(brew --prefix golang)/libexec"
-export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
-test -d "${GOPATH}" || mkdir "${GOPATH}"
-test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
