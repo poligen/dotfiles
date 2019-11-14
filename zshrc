@@ -7,7 +7,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="powerlevel9k/powerlevel9k"
+#ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # command line 左邊想顯示的內容
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir dir_writable vcs) # <= left prompt 設了 "dir"
@@ -130,3 +130,11 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export PATH="$HOME/.cargo/bin:$PATH"
 export RUST_SRC_PATH="/Users/scipio/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
+
+# rename command in zsh
+autoload zmv
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
+source /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme
