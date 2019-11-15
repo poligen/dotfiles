@@ -1,12 +1,23 @@
 ;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here
+;;
+;;
+
+(require 'writegood-mode)
+(require 'org)
+
+
+;; Directory org
+(setq  org-directory "~/Nextcloud/Org/"
+       org-attach-id-dir "~/Nextcloud/Org/data/"
+       org-attach-directory "~/Nextcloud/Org/data/"
+      )
 
 ;; three tools for better english writing:
 ;; write-good mode setting
 ;; flycheck with proselint(python)
 ;; langtool-check(java with languagetool) for the english seplling
-(require 'writegood-mode)
 ;; Set a global key to toggle the mode
 (global-set-key "\C-cg" 'writegood-mode)
 
@@ -20,7 +31,10 @@
 (global-set-key "\C-x44" 'langtool-show-message-at-point)
 (global-set-key "\C-x4c" 'langtool-correct-buffer)
 
-;;auto adjust default window frame size
+
+
+
+;;Auto adjust default window frame size
 (defun set-frame-size-according-to-resolution ()
   (interactive)
   (if window-system
@@ -65,7 +79,7 @@
                         charset (font-spec :family "WenQuanYi Zen Hei Medium" :size 18))))
 
 
-(require 'org)
+
 ;; easy-template after 9.2
 (require 'org-tempo)
 
@@ -104,12 +118,13 @@
   (with-eval-after-load 'org
     ;; org-protocol
     (add-to-list 'org-modules 'org-protocol)
-    ;; Directory org
-    (setq org-directory "~/Nextcloud/Org" )
+
+
     ;; org-agenda
     (setq org-agenda-files (list "~/Nextcloud/Org/inbox.org"
                                  "~/Nextcloud/Org/mylife.org"
                                  "~/Nextcloud/Org/someday.org"))
+
 
     ;; org-refile
     (setq org-refile-targets
