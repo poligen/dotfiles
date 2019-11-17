@@ -15,6 +15,9 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir dir_writable vcs) # <= left promp
 # command line 右邊想顯示的內容
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history ram load time) # <= right prompt 設了 "time"
 
+# shorten dir length
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+
 #nerd font
 POWERLEVEL9K_MODE='nerdfont-complete'
 

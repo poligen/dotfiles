@@ -11,4 +11,4 @@
 (package! org-download :recipe (:host github :repo "abo-abo/org-download"))
 (package! writegood-mode :recipe (:host github :repo "bnbeckwith/writegood-mode"))
 (package! langtool :recipe (:host github :repo "mhayashi1120/Emacs-langtool"))
-(package! org-pomodoro :recipe (:host github :repo "marcinkoziej/org-pomodoro"))
+(package! treemacs-evil)

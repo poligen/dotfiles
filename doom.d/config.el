@@ -33,6 +33,19 @@
 
 
 
+;; use treemacs-evil mode
+(use-package! treemacs-evil
+  ;; :when (featurep! :editor evil +everywhere)
+  :after treemacs
+  :config
+  (define-key! evil-treemacs-state-map
+    [return] #'treemacs-RET-action
+    [tab]    #'treemacs-TAB-action
+    "TAB"    #'treemacs-TAB-action
+    ;; REVIEW Fix #1875 to be consistent with C-w {v,s}, but this should really
+    ;;        be considered upstream.
+    "o v"    #'treemacs-visit-node-horizontal-split
+    "o s"    #'treemacs-visit-node-vertical-split))
 
 ;;Auto adjust default window frame size
 (defun set-frame-size-according-to-resolution ()
