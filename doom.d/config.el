@@ -1,11 +1,15 @@
 ;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
-
 ;; Place your private configuration here
-;;
-;;
 
 (require 'writegood-mode)
 (require 'org)
+
+;;20191118 bug
+;; Patch up the evil-org key map, so that org is usable with daemon
+;; https://github.com/hlissner/doom-emacs/issues/1897
+(after! evil-org
+  (evil-define-key '(normal visual) evil-org-mode-map
+    (kbd "TAB") 'org-cycle))
 
 
 ;; Directory org
@@ -22,14 +26,14 @@
 (global-set-key "\C-cg" 'writegood-mode)
 
 ;; setup languagetool
-(setq langtool-bin "/usr/local/bin/languagetool")
-(require 'langtool)
+;; (setq langtool-bin "/usr/local/bin/languagetool")
+;; (require 'langtool)
 
-(global-set-key "\C-x4w" 'langtool-check)
-(global-set-key "\C-x4W" 'langtool-check-done)
-(global-set-key "\C-x4l" 'langtool-switch-default-language)
-(global-set-key "\C-x44" 'langtool-show-message-at-point)
-(global-set-key "\C-x4c" 'langtool-correct-buffer)
+;; (global-set-key "\C-x4w" 'langtool-check)
+;; (global-set-key "\C-x4W" 'langtool-check-done)
+;; (global-set-key "\C-x4l" 'langtool-switch-default-language)
+;; (global-set-key "\C-x44" 'langtool-show-message-at-point)
+;; (global-set-key "\C-x4c" 'langtool-correct-buffer)
 
 
 
@@ -194,3 +198,13 @@
              :empty-lines 1)
             )))
     )
+    
+    ;; org-tag-align
+(add-hook 'focus-in-hook
+  (lambda () (progn
+    (setq org-tags-column (- 5 (window-body-width)))) (org-align-all-tags)))
+
+(add-hook 'focus-out-hook
+  (lambda () (progn
+    (setq org-tags-column (- 5 (window-body-width)))) (org-align-all-tags)))
+
