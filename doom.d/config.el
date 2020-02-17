@@ -107,7 +107,7 @@
 
 
 ;; org-cliplink
-;;(global-set-key (kbd "C-x p i") 'org-cliplink)
+(global-set-key (kbd "C-x C-i") 'org-cliplink)
 
 ;; org-download setting
 (require 'org-download)
