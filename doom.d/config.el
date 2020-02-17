@@ -129,7 +129,9 @@
 
 ;; org all setting start here
   ;; start org-protocol
+  ;;
   (require 'org-protocol)
+
 
 ;; with eval after load org
   (with-eval-after-load 'org
@@ -146,13 +148,20 @@
     ;; org-refile
     (setq org-refile-targets
       (quote
-       (("someday.org" :maxlevel . 3)
-        ("inbox.org" :maxlevel . 3)
-        ("note.org" :maxlevel . 3)
-        ("mylife.org" :maxlevel . 3))))
+       (("~/Nextcloud/Org/someday.org" :maxlevel . 3)
+        ("~/Nextcloud/Org/inbox.org" :maxlevel . 3)
+        ("~/Nextcloud/Org/books.org" :maxlevel . 3)
+        ("~/Nextcloud/Org/mylife.org" :maxlevel . 3))))
 
     ;; org-capture
     ;; (setq org-default-notes-file custom-org-mode-capture-file)
+    ;; for org-protocol use
+    (defun transform-square-brackets-to-round-ones(string-to-transform)
+  "Transforms [ into ( and ] into ), other chars left unchanged."
+  (concat
+  (mapcar #'(lambda (c) (if (equal c ?[) ?\( (if (equal c ?]) ?\) c))) string-to-transform))
+  )
+
     (setq org-capture-templates
           (quote
            (("p" "Private Templates")
@@ -199,7 +208,7 @@
             )))
     )
     
-    ;; org-tag-align
+;; org-tag-align
 (add-hook 'focus-in-hook
   (lambda () (progn
     (setq org-tags-column (- 5 (window-body-width)))) (org-align-all-tags)))

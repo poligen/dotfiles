@@ -19,6 +19,7 @@
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
        ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE tags
+       ;;hydra
        indent-guides     ; highlighted indent columns
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink the current line after jumping
@@ -30,11 +31,12 @@
        pretty-code       ; replace bits of code with pretty symbols
        tabs              ; an tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
-       ;;unicode           ; extended unicode support for various languages
+       unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
+       zen               ; distraction-free coding or writing
 
 
        :editor
@@ -63,6 +65,11 @@
        term              ; terminals in Emacs
        ;;vterm             ; another terminals in Emacs
 
+       :checkers
+       syntax              ; tasing you for every semicolon you forget
+       spell             ; tasing you for misspelling mispelling
+       grammar           ; tasing grammar mistake every you make
+
        :tools
        ;;ansible
        ;;debugger          ; FIXME stepping through code, to help you add bugs
@@ -71,8 +78,6 @@
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
-       flycheck          ; tasing you for every semicolon you forget
-       flyspell          ; tasing you for misspelling mispelling
        ;;gist              ; interacting with github gists
        (lookup           ; helps you navigate your code and documentation
         +docsets)        ; ...or in Dash docsets locally
@@ -87,12 +92,11 @@
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        ;;upload            ; map local to remote projects via ssh/ftp
-       ;;wakatime
 
        :lang
        ;;assembly          ; assembly for fun or debugging
        ;;(cc +irony +rtags); C/C++/Obj-C madness
-       ;;clojure           ; java with a lisp
+       clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
@@ -122,6 +126,7 @@
         +ipython         ; ipython support for babel
         +pandoc          ; pandoc integration into org's exporter
         +pomodoro        ; be fruitful with the tomato technique
+        +protocol        ; capture webpage
         +present)        ; Emacs for presentations
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother
@@ -145,7 +150,6 @@
        ;; should be loaded late.
        :app
        ;;calendar
-       ;;(email +gmail)    ; emacs as an email client
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
        ;;twitter           ; twitter client https://twitter.com/vnought
@@ -156,6 +160,7 @@
        :config
        ;; For literate config users. This will tangle+compile a config.org
        ;; literate config in your `doom-private-dir' whenever it changes.
+
        ;;literate
 
        ;; The default module sets reasonable defaults for Emacs. It also
