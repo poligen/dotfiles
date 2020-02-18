@@ -11,4 +11,6 @@
 (package! org-download :recipe (:host github :repo "abo-abo/org-download"))
 (package! writegood-mode :recipe (:host github :repo "bnbeckwith/writegood-mode"))
 (package! langtool :recipe (:host github :repo "mhayashi1120/Emacs-langtool"))
-(package! treemacs-evil)
+(package! org-ref)
+(package! interleave)
+(package! org-noter)
