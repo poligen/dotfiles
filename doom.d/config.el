@@ -13,6 +13,10 @@
   (evil-define-key '(normal visual) evil-org-mode-map
     (kbd "TAB") 'org-cycle))
 
+;; org-attach setting
+;;
+(require 'org-attach)
+(setq org-link-abbrev-alist '(("att" . org-attach-expand-link)))
 
 ;; Directory org
 (setq  org-directory "~/Nextcloud/Org/"
@@ -20,10 +24,7 @@
       )
 
 
-;; org-attach setting
-;;
-(require 'org-attach)
-(setq org-link-abbrev-alist '(("att" . org-attach-expand-link)))
+
 ;; three tools for better english writing:
 ;; write-good mode setting
 ;; flycheck with proselint(python)
@@ -120,7 +121,7 @@
 (add-hook 'dired-mode-hook 'org-download-enable)
  ;; org-download use buffer-local variables. Set it individually in files. Otherwise, put things flatly in misc
   ;; folder.
-  (setq-default org-download-image-dir (expand-file-name "data" org-directory)
+(setq-default
                 org-download-heading-lvl nil
                 org-download-delete-image-after-download t
                 org-download-screenshot-method "echo"
@@ -157,7 +158,6 @@ The screenshot tool is determined by `org-download-screenshot-method'."
 
 ;; org all setting start here
   ;; start org-protocol
-  ;;
   (require 'org-protocol)
 
 
@@ -233,9 +233,21 @@ The screenshot tool is determined by `org-download-screenshot-method'."
              (file+headline "~/Nextcloud/Org/note.org" "Readlater")
              "* %? [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]]\n"
              :empty-lines 1)
+            ;; Org-capture templates
+            ("a" "Anki Templates")
+            ("ab" "Anki basic"
+             entry
+             (file+headline "~/Nextcloud/Org/anki.org" "Shelf")
+             "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic-orgmode\n:ANKI_DECK: Big\n:END:\n** Front\n%?\n** Back\n%x\n")
+            ("ac" "Anki cloze"
+             entry
+             (file+headline "~/Nextcloud/Org/anki.org" "Shelf")
+             "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Big\n:END:\n** Text\n%x\n** Extra\n"))
             )))
-    )
-    
+
+
+
+
 ;; org-tag-align
 (add-hook 'focus-in-hook
   (lambda () (progn
@@ -246,14 +258,6 @@ The screenshot tool is determined by `org-download-screenshot-method'."
     (setq org-tags-column (- 5 (window-body-width)))) (org-align-all-tags)))
 
 
-;; deft setup
-(use-package deft
-  :after org
-  :custom
-  (deft-recursive t)
-  (deft-use-filter-string-for-filename t)
-  (deft-default-extension "org")
-  (deft-directory "~/Nextcloud/Org/"))
 
 ;; Automating adding the ID
 ;; https://writequit.org/articles/emacs-org-mode-generate-ids.html
@@ -291,13 +295,6 @@ The screenshot tool is determined by `org-download-screenshot-method'."
     (when (re-search-forward "^#\\+OPTIONS:.*auto-id:t" (point-max) t)
       (org-map-entries (lambda () (eos/org-custom-id-get (point) 'create))))))
 
-
-
-(defun eos/org-add-ids-to-headlines-in-file ()
-  "Add ID properties to all headlines in the
-   current file which do not already have one."
-  (interactive)
-  (org-map-entries (lambda () (eos/org-custom-id-get (point) 'create))))
 
 
 (defun org-id-new (&optional prefix)
@@ -346,3 +343,117 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
                         (when (and (eq major-mode 'org-mode)
                                    (eq buffer-read-only nil))
                           (eos/org-add-ids-to-headlines-in-file))))))
+
+
+
+;; anki-editor setting
+(use-package anki-editor
+  :after org
+  :bind (:map org-mode-map
+              ("C-c a a" . anki-editor-cloze-region-auto-incr)
+              ("C-c a n" . anki-editor-cloze-region-dont-incr)
+              ("C-c a r" . anki-editor-reset-cloze-number)
+              ("C-c a p"  . anki-editor-push-tree))
+  :hook (org-capture-after-finalize . anki-editor-reset-cloze-number) ; Reset cloze-number after each capture.
+  :config
+  (setq anki-editor-create-decks t ;; Allow anki-editor to create a new deck if it doesn't exist
+        anki-editor-org-tags-as-anki-tags t)
+
+  (defun anki-editor-cloze-region-auto-incr (&optional arg)
+    "Cloze region without hint and increase card number."
+    (interactive)
+    (anki-editor-cloze-region my-anki-editor-cloze-number "")
+    (setq my-anki-editor-cloze-number (1+ my-anki-editor-cloze-number))
+    (forward-sexp))
+  (defun anki-editor-cloze-region-dont-incr (&optional arg)
+    "Cloze region without hint using the previous card number."
+    (interactive)
+    (anki-editor-cloze-region (1- my-anki-editor-cloze-number) "")
+    (forward-sexp))
+  (defun anki-editor-reset-cloze-number (&optional arg)
+    "Reset cloze number to ARG or 1"
+    (interactive)
+    (setq my-anki-editor-cloze-number (or arg 1)))
+  (defun anki-editor-push-tree ()
+    "Push all notes under a tree."
+    (interactive)
+    (anki-editor-push-notes '(4))
+    (anki-editor-reset-cloze-number))
+  ;; Initialize
+  (anki-editor-reset-cloze-number)
+  )
+  ;; Allow Emacs to access content from clipboard.
+(setq select-enable-clipboard t
+      select-enable-primary t)
+
+;; org-roam setting
+(use-package org-roam
+      :after org
+      :load-path "elisp/"
+      :hook
+      ((org-mode . org-roam-mode)
+       (after-init . org-roam--build-cache-async) ;; optional!
+       )
+      :custom
+      (org-roam-directory "~/Nextcloud/org-roam/")
+      :bind
+      ("C-c n l" . org-roam)
+      ("C-c n t" . org-roam-today)
+      ("C-c n f" . org-roam-find-file)
+      ("C-c n i" . org-roam-insert)
+      ("C-c n g" . org-roam-show-graph))
+
+
+
+(setq org-roam-buffer-width 0.4)
+(add-hook 'after-init-hook 'org-roam--build-cache-async)
+
+
+(eval-when-compile
+  (require 'el-patch))
+
+(use-package deft
+  :after org
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory "~/Nextcloud/org-roam/")
+  :config/el-patch
+  (defun deft-parse-title (file contents)
+    "Parse the given FILE and CONTENTS and determine the title.
+If `deft-use-filename-as-title' is nil, the title is taken to
+be the first non-empty line of the FILE.  Else the base name of the FILE is
+used as title."
+    (el-patch-swap (if deft-use-filename-as-title
+                       (deft-base-filename file)
+                     (let ((begin (string-match "^.+$" contents)))
+                       (if begin
+                           (funcall deft-parse-title-function
+                                    (substring contents begin (match-end 0))))))
+                   (org-roam--get-title-or-slug file))))
+
+
+;;org-journal setting
+(use-package org-journal
+  :bind
+  ("C-c n j" . org-journal-new-entry)
+  :custom
+  (org-journal-date-prefix "#+TITLE: ")
+  (org-journal-file-format "%Y-%m-%d.org")
+  (org-journal-dir "~/Nextcloud/org-roam/")
+  (org-journal-date-format "%A, %d %B %Y"))
+
+;;nov setting to read epub
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+
+;;org-ref setting
+(require 'org-ref)
+(setq reftex-default-bibliography '("~/Nextcloud/bibliography/references.bib"))
+
+;; see org-ref for use of these variables
+(setq org-ref-bibliography-notes "~/Nextcloud/bibliography/notes.org"
+      org-ref-default-bibliography '("~/Nextcloud/bibliography/references.bib")
+      org-ref-pdf-directory "~/Nextcloud/bibliography/bibtex-pdfs/")
+

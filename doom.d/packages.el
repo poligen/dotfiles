@@ -14,3 +14,10 @@
 (package! org-ref)
 (package! interleave)
 (package! org-noter)
+(package! el-patch)
+(package! anki-editor)
+(package! nov)
+(package! org-roam :recipe
+  (:host github
+   :repo "jethrokuan/org-roam"
+   :branch "develop" ))
