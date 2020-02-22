@@ -1,9 +1,7 @@
 ** SOMEDAY %^{title}
-:PROPERTIES
-author: %^{author}
-:END
-
 :LOGBOOK:
+- author: %^{author}
+- link:
 - Added: %U
 %?
 :END:

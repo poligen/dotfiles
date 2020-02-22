@@ -209,7 +209,7 @@ The screenshot tool is determined by `org-download-screenshot-method'."
              "** %^{description} - %u %^g
  %?")
             ("pb" "Book I want to read" entry
-             (file+headline "~/Nextcloud/Org/mylife.org" "Books to read")
+             (file+headline "~/Nextcloud/Org/books.org" "Books I want to read")
              (file "~/Nextcloud/dotfiles/templates/tl-book.txt"))
             ("pr" "my running record" table-line
              (file+headline "~/Nextcloud/Org/mylife.org" "Jogging")
