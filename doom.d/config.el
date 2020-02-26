@@ -16,7 +16,10 @@
 ;; org-attach setting
 ;;
 (require 'org-attach)
-(setq org-link-abbrev-alist '(("att" . org-attach-expand-link)))
+(setq org-link-abbrev-alist '(
+                              ;; ("att" . org-attach-expand-link)
+                              ("download" . org-download-image-dir)
+                              ))
 
 ;; Directory org
 (setq  org-directory "~/Nextcloud/Org/"
@@ -24,9 +27,8 @@
       )
 
 
-
 ;; three tools for better english writing:
-;; write-good mode setting
+;; write-good setting mode
 ;; flycheck with proselint(python)
 ;; langtool-check(java with languagetool) for the english seplling
 ;; Set a global key to toggle the mode
@@ -118,16 +120,16 @@
 
 ;; org-download setting
 (require 'org-download)
-(add-hook 'dired-mode-hook 'org-download-enable)
  ;; org-download use buffer-local variables. Set it individually in files. Otherwise, put things flatly in misc
   ;; folder.
-(setq-default
+(setq-default   org-download-method 'attach
                 org-download-heading-lvl nil
                 org-download-delete-image-after-download t
                 org-download-screenshot-method "echo"
+                org-download-image-dir "~/Nextcloud/Org"
                 org-download-screenshot-file "/tmp/screenshot.png"
                 org-download-image-org-width 800
-                org-download-annotate-function (lambda (link) "") ;; Don't annotate
+                org-download-annotate-function '(lambda (_link) "")
                 )
 
   ;; My customized org-download to incorporate flameshot gui Workaround to setup flameshot, which enables annotation.
