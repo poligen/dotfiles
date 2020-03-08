@@ -17,8 +17,8 @@
 ;;
 (require 'org-attach)
 (setq org-link-abbrev-alist '(
-                              ;; ("att" . org-attach-expand-link)
-                              ("download" . org-download-image-dir)
+                              ("att" . org-attach-expand-link)
+                              ("download" . "~/Nextcloud/Org/")
                               ))
 
 ;; Directory org
@@ -388,27 +388,6 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
 (setq select-enable-clipboard t
       select-enable-primary t)
 
-;; org-roam setting
-(use-package org-roam
-      :after org
-      :load-path "elisp/"
-      :hook
-      ((org-mode . org-roam-mode)
-       (after-init . org-roam--build-cache-async) ;; optional!
-       )
-      :custom
-      (org-roam-directory "~/Nextcloud/org-roam/")
-      :bind
-      ("C-c n l" . org-roam)
-      ("C-c n t" . org-roam-today)
-      ("C-c n f" . org-roam-find-file)
-      ("C-c n i" . org-roam-insert)
-      ("C-c n g" . org-roam-show-graph))
-
-
-
-(setq org-roam-buffer-width 0.4)
-(add-hook 'after-init-hook 'org-roam--build-cache-async)
 
 
 (eval-when-compile
@@ -421,19 +400,22 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
   (deft-use-filter-string-for-filename t)
   (deft-default-extension "org")
   (deft-directory "~/Nextcloud/org-roam/")
-  :config/el-patch
-  (defun deft-parse-title (file contents)
-    "Parse the given FILE and CONTENTS and determine the title.
-If `deft-use-filename-as-title' is nil, the title is taken to
-be the first non-empty line of the FILE.  Else the base name of the FILE is
-used as title."
-    (el-patch-swap (if deft-use-filename-as-title
-                       (deft-base-filename file)
-                     (let ((begin (string-match "^.+$" contents)))
-                       (if begin
-                           (funcall deft-parse-title-function
-                                    (substring contents begin (match-end 0))))))
-                   (org-roam--get-title-or-slug file))))
+  )
+
+
+;; org-roam setting
+(setq org-roam-link-title-format "R:%s")
+(use-package! org-roam
+  :commands (org-roam-insert org-roam-find-file org-roam)
+  :init 
+  (setq org-roam-directory "~/Nextcloud/org-roam/")
+  (map! :leader 
+        :prefix "n"
+        :desc "Org-Roam-Insert" "i" #'org-roam-insert
+        :desc "Org-Roam-Find"   "/" #'org-roam-find-file
+        :desc "Org-Roam-Buffer" "r" #'org-roam)
+  :config
+  (org-roam-mode +1))
 
 
 ;;org-journal setting
@@ -458,4 +440,19 @@ used as title."
 (setq org-ref-bibliography-notes "~/Nextcloud/bibliography/notes.org"
       org-ref-default-bibliography '("~/Nextcloud/bibliography/references.bib")
       org-ref-pdf-directory "~/Nextcloud/bibliography/bibtex-pdfs/")
-
+;;org-ref-ox-hugo
+(use-package org-ref-ox-hugo
+  :after org org-ref ox-hugo
+  :config
+  (add-to-list 'org-ref-formatted-citation-formats
+               '("md"
+                 ("article" . "${author}, *${title}*, ${journal}, *${volume}(${number})*, ${pages} (${year}). ${doi}")
+                 ("inproceedings" . "${author}, *${title}*, In ${editor}, ${booktitle} (pp. ${pages}) (${year}). ${address}: ${publisher}.")
+                 ("book" . "${author}, *${title}* (${year}), ${address}: ${publisher}.")
+                 ("phdthesis" . "${author}, *${title}* (Doctoral dissertation) (${year}). ${school}, ${address}.")
+                 ("inbook" . "${author}, *${title}*, In ${editor} (Eds.), ${booktitle} (pp. ${pages}) (${year}). ${address}: ${publisher}.")
+                 ("incollection" . "${author}, *${title}*, In ${editor} (Eds.), ${booktitle} (pp. ${pages}) (${year}). ${address}: ${publisher}.")
+                 ("proceedings" . "${editor} (Eds.), _${booktitle}_ (${year}). ${address}: ${publisher}.")
+                 ("unpublished" . "${author}, *${title}* (${year}). Unpublished manuscript.")
+                 ("misc" . "${author} (${year}). *${title}*. Retrieved from [${howpublished}](${howpublished}). ${note}.")
+                 (nil . "${author}, *${title}* (${year})."))))

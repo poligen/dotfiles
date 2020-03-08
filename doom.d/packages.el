@@ -12,12 +12,10 @@
 (package! writegood-mode :recipe (:host github :repo "bnbeckwith/writegood-mode"))
 (package! langtool :recipe (:host github :repo "mhayashi1120/Emacs-langtool"))
 (package! org-ref)
+(package! rog-ref-ox-hugo :recipe (:host github :repo "jethrokuan/org-ref-ox-hugo" :branch "custom/overrides"))
 (package! interleave)
 (package! org-noter)
-(package! el-patch)
+(package! el-patch :recipe (:host github :repo "raxod502/el-patch" :branch "develop"))
 (package! anki-editor)
 (package! nov)
-(package! org-roam :recipe
-  (:host github
-   :repo "jethrokuan/org-roam"
-   :branch "develop" ))
+(package! org-roam :recipe  (:host github :repo "jethrokuan/org-roam" :branch "develop" ))
