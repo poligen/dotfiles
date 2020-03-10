@@ -244,8 +244,8 @@ The screenshot tool is determined by `org-download-screenshot-method'."
             ("ac" "Anki cloze"
              entry
              (file+headline "~/Nextcloud/Org/anki.org" "Shelf")
-             "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Big\n:END:\n** Text\n%x\n** Extra\n"))
-            )))
+             "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Big\n:END:\n** Text\n%x\n** Extra\n")
+            ))))
 
 
 
@@ -416,6 +416,31 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
         :desc "Org-Roam-Buffer" "r" #'org-roam)
   :config
   (org-roam-mode +1))
+
+;; org-roam template
+(setq org-roam-capture-templates
+      '(("h" "hugo blogging" plain
+       (function org-roam--capture-get-point)
+       "%?"
+       :file-name "%<%Y%m%d%H%M%S>-${slug}"
+       :head "#+HUGO_SECTION: post
+#+HUGO_BASE_DIR: ~/Nextcloud/my-blogs/anatomind/
+#+HUGO_TAGS: %^{Tags}
+
+#+EXPORT_FILE_NAME: %^{export name}
+#+TITLE: ${title}
+#+AUTHOR: Suan-sing Tan
+#+DATE: %t"
+       :unnarrowed t)
+      ("d" "default" plain
+       (function org-roam--capture-get-point)
+       "%?"
+       :file-name "%<%Y%m%d%H%M%S>-${slug}"
+       :head "#+TITLE: ${title}\n#+ROAM_KEY: \n#+ROAM_ALIAS: \n - tags :: \n"
+       :unnarrowed t))
+      )
+;; org-roam-protocol
+(require 'org-roam-protocol)
 
 
 ;;org-journal setting
