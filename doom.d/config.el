@@ -102,7 +102,7 @@
 (if window-system
     (dolist (charset '(kana han cjk-misc bopomofo))
       (set-fontset-font (frame-parameter nil 'font)
-                        charset (font-spec :family "WenQuanYi Zen Hei Medium" :size 18))))
+                        charset (font-spec :family "jf-openhuninn-1.0 " :size 18))))
 
 
 
@@ -400,11 +400,27 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
   (deft-use-filter-string-for-filename t)
   (deft-default-extension "org")
   (deft-directory "~/Nextcloud/org-roam/")
+
+  :config/el-patch
+  (defun deft-parse-title (file contents)
+    "Parse the given FILE and CONTENTS and determine the title.
+If `deft-use-filename-as-title' is nil, the title is taken to
+be the first non-empty line of the FILE.  Else the base name of the FILE is
+used as title."
+    (el-patch-swap (if deft-use-filename-as-title
+                       (deft-base-filename file)
+                     (let ((begin (string-match "^.+$" contents)))
+                       (if begin
+                           (funcall deft-parse-title-function
+                                    (substring contents begin (match-end 0))))))
+                   (org-roam--get-title-or-slug file)))
   )
 
 
 ;; org-roam setting
 (setq org-roam-link-title-format "R:%s")
+;; org-roam-protocol
+(require 'org-roam-protocol)
 (use-package! org-roam
   :commands (org-roam-insert org-roam-find-file org-roam)
   :init 
@@ -417,6 +433,12 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
   :config
   (org-roam-mode +1))
 
+<<<<<<< HEAD
+;;org-roam completion system
+(setq org-roam-completion-system 'default)
+
+=======
+>>>>>>> 56609be... org-roam-capture and protocol setting
 ;; org-roam template
 (setq org-roam-capture-templates
       '(("h" "hugo blogging" plain
@@ -429,7 +451,11 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
 
 #+EXPORT_FILE_NAME: %^{export name}
 #+TITLE: ${title}
+<<<<<<< HEAD
+#+AUTHOR: 陳璿丞
+=======
 #+AUTHOR: Suan-sing Tan
+>>>>>>> 56609be... org-roam-capture and protocol setting
 #+DATE: %t"
        :unnarrowed t)
       ("d" "default" plain
@@ -437,10 +463,24 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
        "%?"
        :file-name "%<%Y%m%d%H%M%S>-${slug}"
        :head "#+TITLE: ${title}\n#+ROAM_KEY: \n#+ROAM_ALIAS: \n - tags :: \n"
+<<<<<<< HEAD
+       :unnarrowed t)
+      ))
+
+(setq org-roam-ref-capture-templates
+      '(("r" "ref" plain (function org-roam--capture-get-point)
+         "%?"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "#+ROAM_KEY: ${ref}
+#+TITLE: ${title}\n - tags :: \n"
+         :unnarrowed t)))
+
+=======
        :unnarrowed t))
       )
 ;; org-roam-protocol
 (require 'org-roam-protocol)
+>>>>>>> 56609be... org-roam-capture and protocol setting
 
 
 ;;org-journal setting
