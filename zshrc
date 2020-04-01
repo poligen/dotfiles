@@ -140,4 +140,4 @@ autoload zmv
 . $HOME/.asdf/asdf.sh
 
 . $HOME/.asdf/completions/asdf.bash
-source /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme

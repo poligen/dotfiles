@@ -419,26 +419,9 @@ used as title."
 
 ;; org-roam setting
 (setq org-roam-link-title-format "R:%s")
-;; org-roam-protocol
-(require 'org-roam-protocol)
-(use-package! org-roam
-  :commands (org-roam-insert org-roam-find-file org-roam)
-  :init 
-  (setq org-roam-directory "~/Nextcloud/org-roam/")
-  (map! :leader 
-        :prefix "n"
-        :desc "Org-Roam-Insert" "i" #'org-roam-insert
-        :desc "Org-Roam-Find"   "/" #'org-roam-find-file
-        :desc "Org-Roam-Buffer" "r" #'org-roam)
-  :config
-  (org-roam-mode +1))
-
-<<<<<<< HEAD
+(setq org-roam-directory "~/Nextcloud/org-roam/")
 ;;org-roam completion system
 (setq org-roam-completion-system 'default)
-
-=======
->>>>>>> 56609be... org-roam-capture and protocol setting
 ;; org-roam template
 (setq org-roam-capture-templates
       '(("h" "hugo blogging" plain
@@ -451,11 +434,7 @@ used as title."
 
 #+EXPORT_FILE_NAME: %^{export name}
 #+TITLE: ${title}
-<<<<<<< HEAD
 #+AUTHOR: 陳璿丞
-=======
-#+AUTHOR: Suan-sing Tan
->>>>>>> 56609be... org-roam-capture and protocol setting
 #+DATE: %t"
        :unnarrowed t)
       ("d" "default" plain
@@ -463,7 +442,6 @@ used as title."
        "%?"
        :file-name "%<%Y%m%d%H%M%S>-${slug}"
        :head "#+TITLE: ${title}\n#+ROAM_KEY: \n#+ROAM_ALIAS: \n - tags :: \n"
-<<<<<<< HEAD
        :unnarrowed t)
       ))
 
@@ -474,14 +452,6 @@ used as title."
          :head "#+ROAM_KEY: ${ref}
 #+TITLE: ${title}\n - tags :: \n"
          :unnarrowed t)))
-
-=======
-       :unnarrowed t))
-      )
-;; org-roam-protocol
-(require 'org-roam-protocol)
->>>>>>> 56609be... org-roam-capture and protocol setting
-
 
 ;;org-journal setting
 (use-package org-journal
