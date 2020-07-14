@@ -15,6 +15,6 @@
 (package! rog-ref-ox-hugo :recipe (:host github :repo "jethrokuan/org-ref-ox-hugo" :branch "custom/overrides"))
 (package! interleave)
 (package! org-noter)
-(package! el-patch :recipe (:host github :repo "raxod502/el-patch" :branch "develop"))
+(package! el-patch :recipe (:host github :repo "raxod502/el-patch"))
 (package! anki-editor)
 (package! nov)

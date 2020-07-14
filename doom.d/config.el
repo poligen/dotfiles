@@ -97,13 +97,10 @@
 '(org-refile-use-outline-path (quote file))
 
 
-(setq doom-font (font-spec :family "Fira Code" :size 18 :powerline-scale 1.2))
-;; font for chinese word
-(if window-system
-    (dolist (charset '(kana han cjk-misc bopomofo))
-      (set-fontset-font (frame-parameter nil 'font)
-                        charset (font-spec :family "jf-openhuninn-1.0 " :size 18))))
-
+(setq doom-font (font-spec :family "Fira Code" :size 18 :powerline-scale 1.2)
+      ;; font for chinese word
+      doom-unicode-font (font-spec :family "jf-openhuninn-1.1" :size 18)
+      )
 
 
 ;; easy-template after 9.2
@@ -420,6 +417,7 @@ used as title."
 ;; org-roam setting
 (setq org-roam-link-title-format "R:%s")
 (setq org-roam-directory "~/Nextcloud/org-roam/")
+(setq org-roam-index-file "index.org")
 ;;org-roam completion system
 (setq org-roam-completion-system 'default)
 ;; org-roam template
@@ -443,15 +441,15 @@ used as title."
        :file-name "%<%Y%m%d%H%M%S>-${slug}"
        :head "#+TITLE: ${title}\n#+ROAM_KEY: \n#+ROAM_ALIAS: \n - tags :: \n"
        :unnarrowed t)
-      ))
 
-(setq org-roam-ref-capture-templates
-      '(("r" "ref" plain (function org-roam--capture-get-point)
+      ("r" "ref" plain
+       (function org-roam--capture-get-point)
          "%?"
          :file-name "%<%Y%m%d%H%M%S>-${slug}"
          :head "#+ROAM_KEY: ${ref}
 #+TITLE: ${title}\n - tags :: \n"
-         :unnarrowed t)))
+         :unnarrowed t)
+      ))
 
 ;;org-journal setting
 (use-package org-journal
