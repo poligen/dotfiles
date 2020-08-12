@@ -439,7 +439,7 @@ used as title."
        (function org-roam--capture-get-point)
        "%?"
        :file-name "%<%Y%m%d%H%M%S>-${slug}"
-       :head "#+TITLE: ${title}\n#+ROAM_KEY: \n#+ROAM_ALIAS: \n - tags :: \n"
+       :head "#+TITLE: ${title} \n#+ROAM_ALIAS: \n - tags :: \n"
        :unnarrowed t)
 
       ("r" "ref" plain

@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 export TERM="xterm-256color"
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -7,19 +14,8 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="powerlevel9k/powerlevel9k"
+#ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# command line 左邊想顯示的內容
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir dir_writable vcs) # <= left prompt 設了 "dir"
-
-# command line 右邊想顯示的內容
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history ram load time) # <= right prompt 設了 "time"
-
-# shorten dir length
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-
-#nerd font
-POWERLEVEL9K_MODE='nerdfont-complete'
 
 DEFAULT_USER="scipio"
 
@@ -69,7 +65,7 @@ plugins=(git asdf battery emoji npm sudo command-not-found python pip github )
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:~/.local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -124,20 +120,29 @@ alias gc='git checkout'
 
 
 #anaconda environment
-export PATH="/Users/scipio/anaconda3/bin:$PATH"
+export PATH="~/anaconda3/bin:$PATH"
 
 # IEx setting
 export ERL_AFLAGS="-kernel shell_history enabled"
 
-# Rust setting
-export PATH="$HOME/.cargo/bin:$PATH"
-export RUST_SRC_PATH="/Users/scipio/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
-
-
 # rename command in zsh
 autoload zmv
 
-. $HOME/.asdf/asdf.sh
 
-. $HOME/.asdf/completions/asdf.bash
+
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/scipio/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/scipio/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/scipio/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/scipio/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+fpath=(/home/scipio/.asdf/completions /home/scipio/.oh-my-zsh/plugins/github /home/scipio/.oh-my-zsh/plugins/pip /home/scipio/.oh-my-zsh/plugins/python /home/scipio/.oh-my-zsh/plugins/command-not-found /home/scipio/.oh-my-zsh/plugins/sudo /home/scipio/.oh-my-zsh/plugins/npm /home/scipio/.oh-my-zsh/plugins/emoji /home/scipio/.oh-my-zsh/plugins/battery /home/scipio/.oh-my-zsh/plugins/asdf /home/scipio/.oh-my-zsh/plugins/git /home/scipio/.oh-my-zsh/functions /home/scipio/.oh-my-zsh/completions /usr/local/share/zsh/site-functions /usr/share/zsh/site-functions /usr/share/zsh/functions/Calendar /usr/share/zsh/functions/Chpwd /usr/share/zsh/functions/Completion /usr/share/zsh/functions/Completion/Base /usr/share/zsh/functions/Completion/Linux /usr/share/zsh/functions/Completion/Unix /usr/share/zsh/functions/Completion/X /usr/share/zsh/functions/Completion/Zsh /usr/share/zsh/functions/Exceptions /usr/share/zsh/functions/Math /usr/share/zsh/functions/MIME /usr/share/zsh/functions/Misc /usr/share/zsh/functions/Newuser /usr/share/zsh/functions/Prompts /usr/share/zsh/functions/TCP /usr/share/zsh/functions/VCS_Info /usr/share/zsh/functions/VCS_Info/Backends /usr/share/zsh/functions/Zftp /usr/share/zsh/functions/Zle)
+
+autoload -Uz compinit && compinit
+
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
